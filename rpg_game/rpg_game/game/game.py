@@ -67,8 +67,7 @@ class Game:
             print("Недостаточно ОД для атаки!")
             return
 
-        distance = self.fighter._calculate_distance(self.monster)
-        if self.fighter.weapon.is_valid_attack(distance):
+        if self.fighter.weapon.is_valid_attack(self.fighter, self.monster):
             if self.fighter.attack(self.monster):
                 print("Атака успешна!")
                 if not self.monster.is_alive():

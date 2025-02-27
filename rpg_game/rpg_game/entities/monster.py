@@ -11,7 +11,7 @@ class Monster(Entity):
         if self.health < 0: self.health = 0
 
     def attack(self, target: Entity):
-        if self._calculate_distance(self.position, target.position) == 1:
+        if self._calculate_distance(target) == 1:
             damage = random.randint(10, 20)
             target.take_damage(damage)
             print(f"Монстр атакует! {damage} урона.")
