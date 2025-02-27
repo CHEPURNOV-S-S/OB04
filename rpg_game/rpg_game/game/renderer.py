@@ -1,3 +1,6 @@
+import os
+import platform
+from rpg_game.entities.base import Position
 
 class Renderer:
     def __init__(self, game):
@@ -10,7 +13,10 @@ class Renderer:
         self._draw_actions()
 
     def _clear_console(self):
-        print("\033[H\033[J", end="")  # ANSI-код для очистки консоли
+        if platform.system() == "Windows":
+            os.system("cls")
+        else:
+            os.system("clear")
 
     def _draw_map(self):
         print("   " + " ".join([str(i) for i in range(10)]))
@@ -20,9 +26,9 @@ class Renderer:
         print()
 
     def _get_cell_symbol(self, x, y):
-        if (x, y) == self.game.fighter.position:
+        if Position(x, y) == self.game.fighter.position:
             return "P"
-        if (x, y) == self.game.monster.position:
+        if Position(x, y) == self.game.monster.position:
             return "M"
         return "·"
 

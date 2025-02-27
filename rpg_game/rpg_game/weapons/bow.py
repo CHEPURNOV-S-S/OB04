@@ -5,12 +5,12 @@ from rpg_game.weapons.base import Weapon
 
 class Bow(Weapon):
     def is_valid_attack(self, attacker: Entity, target: Entity) -> bool:
-        distance = self._calculate_distance(attacker, target)
-        return 2 <= distance <= 5
+        distance = attacker.position.distance_to(target.position)
+        return 2 <= distance <= 10
 
     def execute_attack(self, attacker: Entity, target: Entity) -> bool:
-        distance = self._calculate_distance(attacker, target)
-        chance = max(0, 100 - (distance - 2) * 20)
+        distance = attacker.position.distance_to(target.position)
+        chance = max(0, 100 - (distance - 2) * 10)
 
         if randint(1, 100) <= chance:
             damage = randint(10, 20)
@@ -19,7 +19,3 @@ class Bow(Weapon):
             return True
         print("Промах!")
         return False
-
-    def _calculate_distance(self, attacker: Entity, target: Entity) -> int:
-        return abs(attacker.position.x - target.position.x) + \
-            abs(attacker.position.y - target.position.y)
