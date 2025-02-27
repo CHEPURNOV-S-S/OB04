@@ -23,13 +23,21 @@ class MovementManager:
         return False
 
     def move_monster_towards_target(self, monster: Monster, target: Entity) -> bool:
-        """ИИ-перемещение монстра на 1 шаг ближе к цели"""
+        """ИИ-перемещение монстра на 1 шаг ближе к цели, но не ближе чем на расстояние 1"""
+        current_distance = monster.position.distance_to(target.position)
+
+        # Если монстр уже рядом (расстояние <= 1), не двигаемся
+        if current_distance <= 1:
+            return False
+
         dx = target.position.x - monster.position.x
         dy = target.position.y - monster.position.y
 
+        # Вычисляем новую позицию, двигаясь на 1 шаг ближе
         new_x = monster.position.x + (1 if dx > 0 else -1 if dx < 0 else 0)
         new_y = monster.position.y + (1 if dy > 0 else -1 if dy < 0 else 0)
 
+        # Проверяем границы карты
         if 0 <= new_x < self.map_size and 0 <= new_y < self.map_size:
             monster.position = Position(new_x, new_y)
             return True

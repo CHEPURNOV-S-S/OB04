@@ -5,12 +5,18 @@ from rpg_game.entities.base import Position
 class Renderer:
     def __init__(self, game):
         self.game = game
+        self.history = []
 
     def render(self):
         self._clear_console()
         self._draw_map()
         self._draw_status()
-        self._draw_actions()
+        self._draw_contols()
+        self._draw_history()
+
+
+    def add_history_msg(self, msg:str):
+        self.history.append(msg)
 
     def _clear_console(self):
         if platform.system() == "Windows":
@@ -37,9 +43,16 @@ class Renderer:
         print(f"Монстр: ♥{self.game.monster.health}")
         print("-" * 30)
 
-    def _draw_actions(self):
-        print("Доступные действия:")
-        print("1. Двигаться")
-        print("2. Сменить оружие")
-        print("3. Атаковать")
-        print("4. Сохранить игру")
+    def _draw_history(self):
+        for msg in self.history:
+            print(msg)
+
+    def _draw_contols(self):
+        print("=== Управление ===")
+        print("Двигаться: ↑ ↓ ← →")
+        print("С - сменить оружие")
+        print("Enter - Завершить ход")
+        print("Backspace - Выход")
+        print("Space - Атака")
+        print('------------------------------')
+

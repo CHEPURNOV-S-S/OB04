@@ -1,6 +1,4 @@
 from ..entities.base import Entity, Position
-from ..weapons.base import Weapon
-
 
 class Fighter(Entity):
     def __init__(self, position: Position, max_ap: int):
@@ -16,6 +14,7 @@ class Fighter(Entity):
         self.carried_over_ap = remaining // 2
         max_possible = int(self.max_ap * 1.5)
         self.current_ap = min(self.max_ap + self.carried_over_ap, max_possible)
+
 
     def change_weapon(self, weapon) -> bool:
         """Смена оружия (1 ОД)"""
