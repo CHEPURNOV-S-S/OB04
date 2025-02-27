@@ -1,11 +1,15 @@
+import random
+
 from rpg_game.entities.fighter import Fighter
 from rpg_game.entities.monster import Monster
 from rpg_game.weapons.sword import Sword
 from rpg_game.weapons.bow import Bow
 from rpg_game.entities.base import Position
+
+from .movement import MovementManager
 from .renderer import Renderer
 from .constants import MAP_SIZE
-import random
+
 
 class Game:
     def __init__(self):
@@ -18,6 +22,8 @@ class Game:
             if not (x == 5 and y == 0):
                 break
         self.monster = Monster(Position(x, y))
+
+        self.movement = MovementManager(MAP_SIZE)
 
     def _check_game_over(self) -> bool:
         """Проверка условий окончания игры"""
@@ -50,7 +56,7 @@ class Game:
 
     def _handle_movement(self):
         direction = input("Направление (n/s/e/w): ")
-        if self.fighter.move(direction):
+        if self.movement.move_entity(self.fighter, direction):
             print("Перемещение выполнено.")
         else:
             print("Невозможно переместиться!")
@@ -138,7 +144,8 @@ class Game:
         if distance == 1:
             self.monster.attack(self.fighter)
         else:
-            self._monster_move_towards(self.fighter.position)
+            if self.movement.move_monster_towards_target(self.monster, self.fighter):
+                print("Монстр переместился.")
 
     def _monster_move_towards(self, target_pos: Position):
         """Монстр движется к цели"""

@@ -17,21 +17,6 @@ class Fighter(Entity):
         max_possible = int(self.max_ap * 1.5)
         self.current_ap = min(self.max_ap + self.carried_over_ap, max_possible)
 
-    def move(self, direction: str) -> bool:
-        """Перемещение с проверкой границ"""
-        new_x, new_y = self.position.x, self.position.y
-        if direction == 'n': new_y -= 1
-        elif direction == 's': new_y += 1
-        elif direction == 'e': new_x += 1
-        elif direction == 'w': new_x -= 1
-        else: return False
-
-        if 0 <= new_x < 10 and 0 <= new_y < 10:
-            self.position = Position(new_x, new_y)
-            self.current_ap -= 1
-            return True
-        return False
-
     def change_weapon(self, weapon) -> bool:
         """Смена оружия (1 ОД)"""
         if self.current_ap >= 1:
