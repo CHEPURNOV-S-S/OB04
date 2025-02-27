@@ -136,10 +136,7 @@ class Game:
         # Простая логика ИИ:
         # 1. Если рядом - атакует
         # 2. Иначе приближается
-        distance = self._calculate_distance(
-            self.fighter.position,
-            self.monster.position
-        )
+        distance = self.monster.calculate_distance(self.fighter)
 
         if distance == 1:
             self.monster.attack(self.fighter)
@@ -147,19 +144,6 @@ class Game:
             if self.movement.move_monster_towards_target(self.monster, self.fighter):
                 print("Монстр переместился.")
 
-    def _monster_move_towards(self, target_pos: Position):
-        """Монстр движется к цели"""
-        dx = target_pos.x - self.monster.position.x
-        dy = target_pos.y - self.monster.position.y
-
-        new_x = self.monster.position.x + (1 if dx > 0 else -1 if dx < 0 else 0)
-        new_y = self.monster.position.y + (1 if dy > 0 else -1 if dy < 0 else 0)
-
-        if 0 <= new_x < MAP_SIZE and 0 <= new_y < MAP_SIZE:
-            self.monster.position = Position(new_x, new_y)
-
-    def _calculate_distance(self, pos1: Position, pos2: Position) -> int:
-        return abs(pos1.x - pos2.x) + abs(pos1.y - pos2.y)
 
     def run(self):
         while True:

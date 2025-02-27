@@ -30,7 +30,7 @@ class Entity(ABC):
     def is_alive(self) -> bool:
         return self.health > 0
 
-    def _calculate_distance(self, other: 'Entity') -> int:
+    def calculate_distance(self, other: 'Entity') -> int:
        return self.position.distance_to(other.position)
 
     @property
