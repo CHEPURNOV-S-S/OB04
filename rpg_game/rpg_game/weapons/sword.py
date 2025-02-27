@@ -1,0 +1,12 @@
+from rpg_game.weapons.base import Weapon
+from rpg_game.entities.base import Entity
+
+class Sword(Weapon):
+    def is_valid_attack(self, distance: int) -> bool:
+        return distance == 1
+
+    def execute_attack(self, target: Entity) -> bool:
+        damage = random.randint(15, 25)
+        target.take_damage(damage)
+        print(f"Меч наносит {damage} урона!")
+        return True
